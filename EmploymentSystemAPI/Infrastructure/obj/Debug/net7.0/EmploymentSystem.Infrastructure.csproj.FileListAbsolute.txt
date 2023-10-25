@@ -1,0 +1,5 @@
+D:\Workstation\02-Projects\Web-App\PaySky\EmploymentSystemAPI\Infrastructure\obj\Debug\net7.0\EmploymentSystem.Infrastructure.csproj.AssemblyReference.cache
+D:\Workstation\02-Projects\Web-App\PaySky\EmploymentSystemAPI\Infrastructure\obj\Debug\net7.0\EmploymentSystem.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\Workstation\02-Projects\Web-App\PaySky\EmploymentSystemAPI\Infrastructure\obj\Debug\net7.0\EmploymentSystem.Infrastructure.AssemblyInfoInputs.cache
+D:\Workstation\02-Projects\Web-App\PaySky\EmploymentSystemAPI\Infrastructure\obj\Debug\net7.0\EmploymentSystem.Infrastructure.AssemblyInfo.cs
+D:\Workstation\02-Projects\Web-App\PaySky\EmploymentSystemAPI\Infrastructure\obj\Debug\net7.0\EmploymentSystem.Infrastructure.csproj.CoreCompileInputs.cache
