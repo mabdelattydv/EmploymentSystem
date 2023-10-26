@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 namespace Application.DTOs
 {
 	public class ExperienceDto
-	{
-		public int Id { get; set; }
+	{ 
 		public string CompanyName { get; set; }
 		public string Description { get; set; }
 		public DateTime StartDate { get; set; }

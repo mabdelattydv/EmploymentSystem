@@ -20,7 +20,7 @@ namespace Domain.Entities
 		public string Address { get; set; } 
 		public string? Role { get; set; }
 		public DateTime CreationDate { get; set; }
-		public int CreatedBy { get; set; }
+		public int CreatedBy { get; set; } 
 		public ICollection<ApplicantApplication> Applications { get; set; }
 		public ICollection<Vacancy> Vacancies { get; set; }
 

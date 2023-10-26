@@ -16,6 +16,7 @@ using Application.Common.Enums;
 using Application.DTOs;
 using Application.DTOs.Request.Identity;
 using Application.DTOs.Response.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Services;
 
@@ -101,9 +102,8 @@ public class IdentityService : BaseService<IdentityService>, IIdentityService
 	public async Task<RegisterResponseDto> RegisterUser(RegisterRequestDto request)
 	{
 
-		var user = Mapper.Map<User>(request);
-		var role = request.Role.ToString();
-		return await RegisterUserAsync(user, request.Password, role);
+
+		return await RegisterUserAsync(request);
 
 	}
 
@@ -140,10 +140,11 @@ public class IdentityService : BaseService<IdentityService>, IIdentityService
 	}
 
 
-	private async Task<RegisterResponseDto> RegisterUserAsync(User user,
-		string password,
-		string role)
+	private async Task<RegisterResponseDto> RegisterUserAsync(RegisterRequestDto request)
 	{
+		var user = Mapper.Map<User>(request);
+		var role = request.Role.ToString();
+		string password = request.Password.ToString();
 		RegisterResponseDto response = new()
 		{
 			Message = Resource.Sucess,
@@ -163,15 +164,34 @@ public class IdentityService : BaseService<IdentityService>, IIdentityService
 				Logger.LogError(SerializedResponse);
 				return response;
 			}
+			response = await AssignRoleAsync(user, role, transaction);
 
-			return await AssignRoleAsync(user, role, transaction);
+			if (registered.Succeeded)
+			{
+				if (request.Role == "Employer")
+					response = await AddEmployerAsync(request, user, transaction);
+				else
+					response = await AddApplicantAsync(request, user, transaction);
+
+				if (registered.Succeeded)
+				{ 
+					await transaction.CommitAsync();
+					await Context.SaveChangesAsync(default);
+				}
+			}
+			else
+			{
+				await transaction.RollbackAsync();
+			}
+
+			return response;
 
 		}
 		catch (Exception ex)
 		{
 			await transaction.RollbackAsync();
 			return (RegisterResponseDto)LogException(ex);
-		} 
+		}
 	}
 
 
@@ -195,7 +215,72 @@ public class IdentityService : BaseService<IdentityService>, IIdentityService
 			await _userManager.AddToRoleAsync(user, role);
 			response.Message = Resource.Sucess;
 			response.Code = ((byte)MessageEnum.ProcessedSuccessfully).ToString();
-			await transaction.CommitAsync();
+			 
+		}
+		catch (Exception ex)
+		{
+			await transaction.RollbackAsync();
+			return (RegisterResponseDto)LogException(ex);
+		}
+		return response;
+	}
+
+	private async Task<RegisterResponseDto> AddEmployerAsync(RegisterRequestDto request, User user, IDbContextTransaction transaction)
+	{
+		RegisterResponseDto response = new()
+		{
+			Message = Resource.Sucess,
+			Code = ((byte)MessageEnum.ProcessedSuccessfully).ToString()
+		};
+		try
+		{
+			var employer = Mapper.Map<Employer>(request);
+			employer.User = user;
+			employer.UserId = user.Id;
+
+			var result = await Context.Employers.AddAsync(employer);
+			if (result.State != EntityState.Added)
+			{
+				response.Code = ((byte)MessageEnum.ProcessFailed).ToString();
+				response.Message = Resource.GeneralError; 
+				return response;
+			}
+
+			response.Message = Resource.Sucess;
+			response.Code = ((byte)MessageEnum.ProcessedSuccessfully).ToString();
+			 
+		}
+		catch (Exception ex)
+		{
+			await transaction.RollbackAsync();
+			return (RegisterResponseDto)LogException(ex);
+		}
+		return response;
+	}
+
+	private async Task<RegisterResponseDto> AddApplicantAsync(RegisterRequestDto request, User user, IDbContextTransaction transaction)
+	{
+		RegisterResponseDto response = new()
+		{
+			Message = Resource.Sucess,
+			Code = ((byte)MessageEnum.ProcessedSuccessfully).ToString()
+		};
+		try
+		{
+			var applicant = Mapper.Map<Applicant>(request);
+			applicant.User = user;
+			applicant.UserId = user.Id;
+			var result = await Context.Applicants.AddAsync(applicant);
+			if (result.State != EntityState.Added)
+			{
+				response.Code = ((byte)MessageEnum.ProcessFailed).ToString();
+				response.Message = Resource.GeneralError; 
+				return response;
+			}
+
+			response.Message = Resource.Sucess;
+			response.Code = ((byte)MessageEnum.ProcessedSuccessfully).ToString();
+			
 		}
 		catch (Exception ex)
 		{

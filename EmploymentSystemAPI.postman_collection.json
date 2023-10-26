@@ -1,0 +1,594 @@
+{
+	"info": {
+		"_postman_id": "a6b0ce9b-52f3-43da-85bc-f277a3706a98",
+		"name": "EmploymentSystemAPI",
+		"description": "# Introduction\nWhat does your API do?\n# Overview\nThings that the developers should know about\n\n# Authentication\nWhat is the preferred way of using the API?\n\n# Error Codes\nWhat errors and status codes can a user expect?\n\n# Rate limit\nIs there a limit to the number of requests a user can send?",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11325363"
+	},
+	"item": [
+		{
+			"name": "Application",
+			"item": [
+				{
+					"name": "https://localhost:7067/Application/SearchForVacancy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"number\": \"IT-001\",\r\n  \"title\": \"IT\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7067/Application/SearchForVacancy",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7067",
+							"path": [
+								"Application",
+								"SearchForVacancy"
+							]
+						},
+						"description": "Search for vacancy"
+					},
+					"response": [
+						{
+							"name": "Default",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://localhost:7067/Application/SearchForVacancy",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7067",
+									"path": [
+										"Application",
+										"SearchForVacancy"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "https://localhost:7067/Application/Apply/{vacancyId}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7067/Application/Apply/{{vacancyId}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7067",
+							"path": [
+								"Application",
+								"Apply",
+								"{{vacancyId}}"
+							]
+						},
+						"description": "Apply vacancy"
+					},
+					"response": [
+						{
+							"name": "Default",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://localhost:7067/Application/Apply/{vacancyId}",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7067",
+									"path": [
+										"Application",
+										"Apply",
+										"{vacancyId}"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Identity",
+			"item": [
+				{
+					"name": "https://localhost:7067/Identity/Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"mabdelatty.dv@gmail.com\",\r\n    \"password\": \"Atwa@2023\",\r\n    \"firstName\": \"Mahmoud\",\r\n    \"middleName\": \"Mohamed\",\r\n    \"lastName\": \"Abdelatty\",\r\n    \"city\": \"Cairo\",\r\n    \"country\": \"Egypt\",\r\n    \"address\": \"Nasr City\",\r\n    \"phoneNumber\": \"01005845708\",\r\n    \"role\": \"Employer\",\r\n    \"employer\": {\r\n        \"department\": {\r\n            \"name\": \"IT\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7067/Identity/Register",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7067",
+							"path": [
+								"Identity",
+								"Register"
+							]
+						},
+						"description": "Register new user"
+					},
+					"response": [
+						{
+							"name": "Default",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://localhost:7067/Identity/Register",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7067",
+									"path": [
+										"Identity",
+										"Register"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "https://localhost:7067/Identity/login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody); \r",
+									"pm.collectionVariables.set(\"access_token\", jsonData.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"Ahmedy.dv@gmail.com\",\r\n  \"password\": \"Atwa@2023\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7067/Identity/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7067",
+							"path": [
+								"Identity",
+								"login"
+							]
+						},
+						"description": "Login"
+					},
+					"response": [
+						{
+							"name": "Default",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://localhost:7067/Identity/login",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7067",
+									"path": [
+										"Identity",
+										"login"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Vacancy",
+			"item": [
+				{
+					"name": "https://localhost:7067/Vacancy/PostVacancy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"number\": \"HR-001\",\r\n  \"title\": \"HR\",\r\n  \"description\": \"string\",\r\n  \"location\": \"Cairo\",\r\n  \"expiryDate\": \"2023-11-22T01:24:14.394Z\",\r\n  \"isActive\": true,\r\n  \"maxNumberOfApplications\": 20,\r\n  \"createdBy\": 1,\r\n  \"creationDate\": \"2023-10-22T01:24:14.394Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7067/Vacancy/PostVacancy",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7067",
+							"path": [
+								"Vacancy",
+								"PostVacancy"
+							]
+						},
+						"description": "Create new vacancy"
+					},
+					"response": [
+						{
+							"name": "Default Copy",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://localhost:7067/Vacancy/PostVacancy",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7067",
+									"path": [
+										"Vacancy",
+										"PostVacancy"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "https://localhost:7067/Vacancy/UpdateVacancy/{vacancyId}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"number\": \"HR-001\",\r\n  \"title\": \"HR\",\r\n  \"description\": \"string\",\r\n  \"location\": \"Cairo\",\r\n  \"expiryDate\": \"2023-11-22T01:24:14.394Z\",\r\n  \"isActive\": false,\r\n  \"maxNumberOfApplications\": 20,\r\n  \"createdBy\": 1,\r\n  \"creationDate\": \"2023-10-22T01:24:14.394Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7067/Vacancy/UpdateVacancy/{{vacancyId}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7067",
+							"path": [
+								"Vacancy",
+								"UpdateVacancy",
+								"{{vacancyId}}"
+							]
+						},
+						"description": "Update vacancy"
+					},
+					"response": [
+						{
+							"name": "Default",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://localhost:7067/Vacancy/UpdateVacancy/{vacancyId}",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7067",
+									"path": [
+										"Vacancy",
+										"UpdateVacancy",
+										"{vacancyId}"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "https://localhost:7067/Vacancy/DeactivateVacancy/{vacancyId}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://localhost:7067/Vacancy/DeactivateVacancy/{{vacancyId}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7067",
+							"path": [
+								"Vacancy",
+								"DeactivateVacancy",
+								"{{vacancyId}}"
+							]
+						},
+						"description": "Deactivate vacancy"
+					},
+					"response": [
+						{
+							"name": "Default",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://localhost:7067/Vacancy/DeactivateVacancy/{vacancyId}",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7067",
+									"path": [
+										"Vacancy",
+										"DeactivateVacancy",
+										"{vacancyId}"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "https://localhost:7067/Vacancy/GetApplicantsForVacancy/{vacancyId}",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://localhost:7067/Vacancy/GetApplicantsForVacancy/{{vacancyId}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7067",
+							"path": [
+								"Vacancy",
+								"GetApplicantsForVacancy",
+								"{{vacancyId}}"
+							]
+						},
+						"description": "Get applicants for the vacancy"
+					},
+					"response": [
+						{
+							"name": "Default",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://localhost:7067/Vacancy/GetApplicantsForVacancy/{vacancyId}",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7067",
+									"path": [
+										"Vacancy",
+										"GetApplicantsForVacancy",
+										"{vacancyId}"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "access_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "vacancyId",
+			"value": "1"
+		}
+	]
+}

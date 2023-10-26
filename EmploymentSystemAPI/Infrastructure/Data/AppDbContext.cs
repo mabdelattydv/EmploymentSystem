@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
+using System.Diagnostics.Metrics;
 using System.Reflection;
 
 namespace Infrastructure.Data
@@ -20,7 +21,7 @@ namespace Infrastructure.Data
 		#region Sets
 
 		public Task<IDbContextTransaction> Transaction => Database.BeginTransactionAsync();
-		 
+
 		public DbSet<ApplicantApplication> Applications { get; set; }
 
 		public DbSet<Vacancy> Vacancies { get; set; }
@@ -38,14 +39,11 @@ namespace Infrastructure.Data
 			// Configure the User entity
 			base.OnModelCreating(modelBuilder);
 
-	 
 			 
-			modelBuilder.Entity<Applicant>()
-				.HasOne(a => a.User)
-				.WithOne();
-
 			modelBuilder.Entity<User>().Property(u => u.CreationDate).HasDefaultValueSql("getdate()");
-			
+		
+			 
+
 
 			modelBuilder.Entity<Applicant>()
 				.HasMany(a => a.Experience)
@@ -58,6 +56,10 @@ namespace Infrastructure.Data
 			modelBuilder.Entity<Employer>()
 				.HasOne(a => a.User)
 				.WithOne();
+
+
+		
+
 
 			modelBuilder.Entity<Employer>()
 				.HasOne(a => a.Department)
@@ -77,8 +79,9 @@ namespace Infrastructure.Data
 			modelBuilder.Entity<ApplicantApplication>()
 				.HasOne(a => a.Applicant)
 				.WithMany(v => v.Applications);
-			 
-			 
+
+			modelBuilder.Entity<ApplicantApplication>().Property(u => u.CreationDate).HasDefaultValueSql("getdate()");
+
 
 			new DbInitializer(modelBuilder).Seed();
 		}

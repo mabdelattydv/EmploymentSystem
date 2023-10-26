@@ -43,8 +43,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("Applicants");
                 });
@@ -67,7 +66,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -202,21 +203,21 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "c7440aa6-542f-41aa-8bf4-fe32348fba80",
+                            ConcurrencyStamp = "7f90e692-58a3-42b9-a36c-4a7013b1e3b6",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "49ceb406-145e-497f-b08d-1e5f6dfe6e61",
+                            ConcurrencyStamp = "5edc60e2-15e8-4b94-ae5e-fb59598a2f0f",
                             Name = "Employer",
                             NormalizedName = "EMPLOYER"
                         },
                         new
                         {
                             Id = 3,
-                            ConcurrencyStamp = "85c4c43f-db1d-4aea-b801-530769386888",
+                            ConcurrencyStamp = "1055c0e2-c762-41ef-8baa-90d7f01b30c8",
                             Name = "Applicant",
                             NormalizedName = "APPLICANT"
                         });
@@ -490,8 +491,8 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Applicant", b =>
                 {
                     b.HasOne("Domain.Entities.User", "User")
-                        .WithOne()
-                        .HasForeignKey("Domain.Entities.Applicant", "UserId")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

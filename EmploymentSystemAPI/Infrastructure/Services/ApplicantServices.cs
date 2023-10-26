@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
 using Application.DTOs.Request.Vacancy;
 using Application.DTOs.Response.Vacancy;
+using Domain.Entities;
 // ReSharper disable All
 
 namespace Infrastructure.Services;
@@ -58,10 +59,10 @@ public class ApplicantServices : BaseService<ApplicantServices>, IApplicantServi
 		catch (Exception ex)
 		{
 			return (VacanciesResponseDto)LogException(ex);
-		} 
+		}
 	}
 
-	public async Task<ResponseDto> Apply(int applicantId, int vacancyId)
+	public async Task<ResponseDto> Apply(int userId, int vacancyId)
 	{
 		var response = new ResponseDto()
 		{
@@ -72,9 +73,11 @@ public class ApplicantServices : BaseService<ApplicantServices>, IApplicantServi
 		try
 		{
 
-			if (!HasAppliedToday(applicantId))
+			Applicant applicant = Context.Applicants.FirstOrDefault(ap => ap.UserId == userId);
+
+			if (!HasAppliedToday(applicant.Id))
 			{
-				var application = new Domain.Entities.ApplicantApplication { VacancyId = vacancyId, ApplicantId = applicantId };
+				var application = new ApplicantApplication { VacancyId = vacancyId, ApplicantId = applicant.Id };
 				var added = Context.Applications.Add(application);
 				if (added.State != EntityState.Added)
 				{
@@ -82,6 +85,7 @@ public class ApplicantServices : BaseService<ApplicantServices>, IApplicantServi
 					return response;
 				}
 
+				await transaction.CommitAsync();
 				await Context.SaveChangesAsync(default);
 				response.Code = ((byte)MessageEnum.ProcessedSuccessfully).ToString();
 				response.Message = Resource.Sucess;

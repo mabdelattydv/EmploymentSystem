@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231022014349_AddTables")]
+    [Migration("20231026015544_AddTables")]
     partial class AddTables
     {
         /// <inheritdoc />
@@ -46,8 +46,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("Applicants");
                 });
@@ -70,7 +69,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -205,21 +206,21 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "8b6b4859-304b-44cd-996d-2fb96b942fcd",
+                            ConcurrencyStamp = "7f90e692-58a3-42b9-a36c-4a7013b1e3b6",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "fdcc55c8-57df-4903-b956-af1fe903c24c",
+                            ConcurrencyStamp = "5edc60e2-15e8-4b94-ae5e-fb59598a2f0f",
                             Name = "Employer",
                             NormalizedName = "EMPLOYER"
                         },
                         new
                         {
                             Id = 3,
-                            ConcurrencyStamp = "1b312b97-e840-4e7a-8ce2-4ce1ef94e6ca",
+                            ConcurrencyStamp = "1055c0e2-c762-41ef-8baa-90d7f01b30c8",
                             Name = "Applicant",
                             NormalizedName = "APPLICANT"
                         });
@@ -352,7 +353,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("Location")
                         .IsRequired()
@@ -491,8 +494,8 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Applicant", b =>
                 {
                     b.HasOne("Domain.Entities.User", "User")
-                        .WithOne()
-                        .HasForeignKey("Domain.Entities.Applicant", "UserId")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -214,7 +214,7 @@ namespace Infrastructure.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ExpiryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     MaxNumberOfApplications = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: true),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
@@ -291,7 +291,7 @@ namespace Infrastructure.Migrations
                     ApplicantId = table.Column<int>(type: "int", nullable: false),
                     VacancyId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: true),
-                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     CreatedBy = table.Column<int>(type: "int", nullable: false),
                     UpdatedBy = table.Column<int>(type: "int", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -323,16 +323,15 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "8b6b4859-304b-44cd-996d-2fb96b942fcd", "Admin", "ADMIN" },
-                    { 2, "fdcc55c8-57df-4903-b956-af1fe903c24c", "Employer", "EMPLOYER" },
-                    { 3, "1b312b97-e840-4e7a-8ce2-4ce1ef94e6ca", "Applicant", "APPLICANT" }
+                    { 1, "7f90e692-58a3-42b9-a36c-4a7013b1e3b6", "Admin", "ADMIN" },
+                    { 2, "5edc60e2-15e8-4b94-ae5e-fb59598a2f0f", "Employer", "EMPLOYER" },
+                    { 3, "1055c0e2-c762-41ef-8baa-90d7f01b30c8", "Applicant", "APPLICANT" }
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Applicants_UserId",
                 table: "Applicants",
-                column: "UserId",
-                unique: true);
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Applications_ApplicantId",
